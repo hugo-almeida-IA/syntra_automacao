@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.core.config import settings
+
 app = FastAPI(
     title="Syntra Chatbot API",
     description="API do chatbot inteligente para WhatsApp.",
@@ -9,5 +11,6 @@ app = FastAPI(
 @app.get("/")
 def home():
     return {
-        "message": "Syntra Chatbot API está funcionando!"
+        "message": "Syntra Chatbot API está funcionando!",
+        "database": settings.DATABASE_URL
     }
