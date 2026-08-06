@@ -1,7 +1,11 @@
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base_model import BaseModel
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.conversa import Conversa
 
 
 class Cliente(BaseModel):
@@ -23,4 +27,9 @@ class Cliente(BaseModel):
         Boolean,
         default=True,
         nullable=False
+    )
+
+    conversas: Mapped[list["Conversa"]] = relationship(
+        back_populates="cliente",
+        cascade="all, delete-orphan"
     )
