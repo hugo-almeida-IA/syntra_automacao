@@ -5,3 +5,5 @@ class RequisicaoChat(BaseModel):
     prompt: str
 
 @router.post("/chat")
+def commit():
+    return None
