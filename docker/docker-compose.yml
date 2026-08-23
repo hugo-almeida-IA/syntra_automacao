@@ -1,9 +1,18 @@
 services:
   evolution_db:                               #Nome do serviço, que será usado para referenciar o container
     image: postgres:15                        #Imagem do container, que será baixada do Docker Hub
+    ports:
+      - "5432:5432"                              #Porta do container, que será mapeada para a porta do host
     environment:
       POSTGRES_USER: postgres                 #Nome do usuário/dono do banco de dados
       POSTGRES_PASSWORD: 12345678             #Senha do usuário/dono do banco de dados (simples para fins de teste)
       POSTGRES_DB: evolution                  #Nome do banco de dados, que será gerado ao criar.
+
+  evolution_api:                              #Nome do container dentro da rede do Docker ou "carteiro"
+    image: atendai/evolution-api              #Imagem oficial da API, baixada do docker hub
     ports:
-      - "5432:5432"                              #Porta do container, que será mapeada para a porta do host
+    - "8080:8080"                             #libera a porta 8080 para acesar a evolutionAPi pelo navegador
+    environment:
+      DATABASE_PROVIDER: postgresql           #Mosta para a API que o banco de dados usado será do tipo PostgreSQL
+      DATABASE_CONNECTION_URI: postgresql://postgres:12345678@evolution_db:5432/evolution?schema=public         #String de conexão
+      AUTHENTICATION_API_KEY: MinhaSenh@2312              #Protege a evolution, garantindo que ninguém tenha acesso ao WPP
