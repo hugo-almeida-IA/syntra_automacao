@@ -16,3 +16,10 @@ services:
       DATABASE_PROVIDER: postgresql           #Mosta para a API que o banco de dados usado será do tipo PostgreSQL
       DATABASE_CONNECTION_URI: postgresql://postgres:${DB_PASSWORD}@evolution_db:5432/evolution?schema=public         #String de conexão
       AUTHENTICATION_API_KEY: ${EVOLUTION_API_KEY}              #Protege a evolution, garantindo que ninguém tenha acesso ao WPP
+      REDIS_ENABLED: "true"
+      REDIS_URI: redis://evolution_redis:6379
+  evolution_redis:
+  image: redis:latest
+  ports:
+    - "6379:6379"
+  command: redis-server --appendonly yes      #Diz para o Redis, salvar aa fila no disco
