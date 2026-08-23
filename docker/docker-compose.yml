@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: evolution                  #Nome do banco de dados, que será gerado ao criar.
 
   evolution_api:                              #Nome do container dentro da rede do Docker ou "carteiro"
-    image: evoapicloud/evolution-api          #Imagem oficial da API, baixada do docker hub
+    image: evoapicloud/evolution-api:latest          #Imagem oficial da API, baixada do docker hub
     ports:
     - "8080:8080"                             #libera a porta 8080 para acesar a evolutionAPi pelo navegador
     environment:
