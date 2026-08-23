@@ -19,7 +19,7 @@ services:
       REDIS_ENABLED: "true"
       REDIS_URI: redis://evolution_redis:6379
   evolution_redis:
-  image: redis:latest
-  ports:
-    - "6379:6379"
-  command: redis-server --appendonly yes      #Diz para o Redis, salvar aa fila no disco
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes      #Diz para o Redis, salvar aa fila no disco
