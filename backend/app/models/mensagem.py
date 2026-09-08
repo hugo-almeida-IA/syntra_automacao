@@ -7,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base_model import BaseModel
 from app.core.enums.papel_mensagem import PapelMensagem
 
+
 if TYPE_CHECKING:
     from app.models.conversa import Conversa
 
@@ -15,7 +16,10 @@ class Mensagem(BaseModel):
     __tablename__ = "mensagens"
 
     conversa_id: Mapped[UUID] = mapped_column(
-        ForeignKey("conversas.id"),
+        ForeignKey(
+            "conversas.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
         index=True,
     )
@@ -32,5 +36,5 @@ class Mensagem(BaseModel):
     )
 
     conversa: Mapped["Conversa"] = relationship(
-        back_populates="mensagens"
+        back_populates="mensagens",
     )
