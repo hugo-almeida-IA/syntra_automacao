@@ -1,5 +1,6 @@
-from sqlalchemy import Boolean, String
+
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Boolean, String, UniqueConstraint
 
 from app.models.base_model import BaseModel
 from typing import TYPE_CHECKING
@@ -11,6 +12,19 @@ if TYPE_CHECKING:
 class Cliente(BaseModel):
     __tablename__ = "clientes"
 
+    __table_args__ = (
+        UniqueConstraint(
+            "instancia",
+            "telefone",
+            name="uq_clientes_instancia_telefone",
+        ),
+    )
+
+    instancia: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+
     nome: Mapped[str | None] = mapped_column(
         String(150),
         nullable=True
@@ -18,9 +32,7 @@ class Cliente(BaseModel):
 
     telefone: Mapped[str] = mapped_column(
         String(20),
-        unique=True,
         nullable=False,
-        index=True
     )
 
     ativo: Mapped[bool] = mapped_column(

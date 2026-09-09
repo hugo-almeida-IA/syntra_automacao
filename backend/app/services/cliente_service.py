@@ -3,13 +3,16 @@ from sqlalchemy.orm import Session
 
 from app.models.cliente import Cliente
 
-
 def buscar_ou_criar_cliente(
     db: Session,
     telefone: str,
+    instancia: str,
 ) -> Cliente:
     resultado = db.execute(
-        select(Cliente).where(Cliente.telefone == telefone)
+        select(Cliente).where(
+            Cliente.instancia == instancia,
+            Cliente.telefone == telefone,
+        )
     )
 
     cliente = resultado.scalar_one_or_none()
@@ -19,6 +22,7 @@ def buscar_ou_criar_cliente(
 
     cliente = Cliente(
         telefone=telefone,
+        instancia=instancia,
     )
 
     db.add(cliente)

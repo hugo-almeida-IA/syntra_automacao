@@ -27,11 +27,17 @@ def criar_mensagem(
 def buscar_historico(
     db: Session,
     conversa: Conversa,
+    limite: int,
 ) -> list[Mensagem]:
     resultado = db.execute(
         select(Mensagem)
         .where(Mensagem.conversa_id == conversa.id)
-        .order_by(Mensagem.created_at.asc())
+        .order_by(Mensagem.created_at.desc())
+        .limit(limite)
     )
+
+    mensagens = list(resultado.scalars().all())
+
+    return list(reversed(mensagens))
 
     return list(resultado.scalars().all())
